@@ -51,8 +51,8 @@
 }
 
 @media (max-width: 1024px) {
-  .Weather {
-    display: none;
+  .Weather .forecast-block {
+    padding: 12px 5px;
   }
 }
 

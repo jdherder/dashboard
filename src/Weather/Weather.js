@@ -60,7 +60,9 @@ class Weather extends Component {
     // data not ready, render with loader
     if (!this.state.weatherData) {
       return (
-        <div className="Weather"><Loading /></div>
+        <div className="Weather">
+          <div className="loading-container"><Loading /></div>
+        </div>
       );
     }
 

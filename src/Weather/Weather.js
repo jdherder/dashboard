@@ -73,7 +73,11 @@ class Weather extends Component {
       return (
         <div key={i} className="forecast-block" style={{opacity: opacity}}>
           <div className="forecast-day">{item.day}</div>
-          <div className="forecast-temps">{item.high}°/{item.low}°</div>
+          <div className="forecast-temps">
+            <span className="high">{item.high}°</span>
+            <span className="slash">/</span>
+            <span className="low">{item.low}°</span>
+          </div>
           <div className={codeClass}></div>
         </div>
       );

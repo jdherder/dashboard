@@ -56,6 +56,22 @@
   }
 }
 
+@media (max-width: 480px) {
+  .Weather .forecast-block .forecast-temps {
+    font-size: 12px;
+  }
+  .Weather .forecast-block .forecast-temps > span {
+    display: block;
+  }
+  .Weather .forecast-block .forecast-temps .slash {
+    display: none;
+  }
+  .Weather .forecast-block .wi {
+    font-size: 12px;
+    padding: 0;
+  }
+}
+
 /* weather icons */
 
 .wi {

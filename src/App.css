@@ -3,7 +3,8 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-image: url('./assets/kc01.jpg');
+  background-image: url('../public/assets/1.jpg');
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }

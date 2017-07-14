@@ -39,13 +39,17 @@ class Clock extends Component {
     let min = d.getMinutes();
     let amPm = 'am';
 
-    if (hr > 12)  {
-      hr -= 12;
-      amPm = 'pm';
-    }
+    /* set pm at noon and after */
+    if (hr >= 12) { amPm = 'pm'; }
 
-    if (hr === 0) {hr = 12;}
-    if (min < 10) {min = '0' + min;}
+    /* convert 24 hour time */
+    if (hr > 12)  { hr -= 12; }
+
+    /* convert midnight hour (0) to 12 */
+    if (hr === 0) { hr = 12; }
+
+    /* pad single digit minutes with leading 0 */
+    if (min < 10) { min = '0' + min; }
 
     return {
       hr: hr,

@@ -9,6 +9,7 @@ class Weather extends Component {
 
     this.state = {
       weatherData: null,
+      loading: true,
     };
   }
 
@@ -44,16 +45,31 @@ class Weather extends Component {
 
     this.setState({
       weatherData: weatherData,
+      loading: false,
     });
   }
 
-  buildWeatherIconCode(code) {
+  buildWeatherIconClass(code) {
     return `wi wi-yahoo-${code}`;
   }
 
+  buildForecastItem(item, i) {
+    const codeClass = this.buildWeatherIconClass(item.code);
+    return (
+      <div key={i} className="forecast-block">
+        <div className="forecast-day">{item.day}</div>
+        <div className="forecast-temps">
+          <span className="high">{item.high}°</span>
+          <span className="slash">/</span>
+          <span className="low">{item.low}°</span>
+        </div>
+        <div className={codeClass}></div>
+      </div>
+    );
+  }
+
   render() {
-    // data not ready, render with loader
-    if (!this.state.weatherData) {
+    if (this.state.loading) {
       return (
         <div className="Weather">
           <div className="loading-container"><Loading /></div>
@@ -61,23 +77,9 @@ class Weather extends Component {
       );
     }
 
-    let opacity = 1;
-    const currentCodeClass = this.buildWeatherIconCode(this.state.weatherData.condition.code);
-    const forcastItems = this.state.weatherData.forecast.map((item, i) => {
-      const codeClass = this.buildWeatherIconCode(item.code);
-      opacity -= 0.085;
-
-      return (
-        <div key={i} className="forecast-block" style={{opacity: opacity}}>
-          <div className="forecast-day">{item.day}</div>
-          <div className="forecast-temps">
-            <span className="high">{item.high}°</span>
-            <span className="slash">/</span>
-            <span className="low">{item.low}°</span>
-          </div>
-          <div className={codeClass}></div>
-        </div>
-      );
+    const currentCodeClass = this.buildWeatherIconClass(this.state.weatherData.condition.code);
+    const forecastItems = this.state.weatherData.forecast.map((item, i) => {
+      return this.buildForecastItem(item, i);
     });
 
     return (
@@ -90,7 +92,7 @@ class Weather extends Component {
           <div className="info">Currently in {this.state.weatherData.location.city + ', ' + this.state.weatherData.location.region}</div>
         </div>
         <div className="forecast">
-          {forcastItems}
+          {forecastItems}
         </div>
       </div>
     );

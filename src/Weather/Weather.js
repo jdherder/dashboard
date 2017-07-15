@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 import Loading from '../Loading/Loading';
 import './Weather.css';
 
@@ -28,27 +29,21 @@ class Weather extends Component {
     const yahooApiLink = 'https://query.yahooapis.com/v1/public/yql?q=';
     const query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\'kansas city, mo\')&format=json';
 
-    fetch(yahooApiLink + query)
+    Axios.get(yahooApiLink + query)
       .then(data => this.extractWeatherData(data));
   }
 
   extractWeatherData(res) {
-    let body = res.json();
-    body.then(data => {
-      const results = data.query.results.channel;
-      // console.log('results: ', results);
+    const results = res.data.query.results.channel;
+    const weatherData = {
+      condition: results.item.condition,
+      forecast: results.item.forecast,
+      astronomy: results.astronomy,
+      location: results.location
+    };
 
-      const weatherData = {
-        condition: results.item.condition,
-        forecast: results.item.forecast,
-        astronomy: results.astronomy,
-        location: results.location
-      };
-
-      this.setState({
-        weatherData: weatherData,
-      });
-
+    this.setState({
+      weatherData: weatherData,
     });
   }
 

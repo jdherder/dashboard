@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Clock from './Clock/Clock';
 import Weather from './Weather/Weather';
+import Backgrounds from './backgrounds.module';
 import './App.css';
 
 class App extends Component {
   render() {
-
-    // TODO: Eventually, make backgrounds in general user configurable
-    const rand = Math.floor(Math.random() * 14) + 1;
+    const rand = Math.floor(Math.random() * Backgrounds.length );
+    const bg = Backgrounds[rand];
 
     return (
-      <div className="App" style={{backgroundImage: `url('/assets/${rand}.jpg')`}}>
+      <div className="App" style={{backgroundImage: `url('${bg}')`}}>
         <Clock />
         <Weather />
       </div>

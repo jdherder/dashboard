@@ -10,6 +10,7 @@ class Weather extends Component {
     this.state = {
       weatherData: null,
       loading: true,
+      error: false,
     };
   }
 
@@ -31,7 +32,8 @@ class Weather extends Component {
     const query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\'kansas city, mo\')&format=json';
 
     Axios.get(yahooApiLink + query)
-      .then(data => this.extractWeatherData(data));
+      .then(data => this.extractWeatherData(data))
+      .catch(e => this.weatherFailure(e));
   }
 
   extractWeatherData(res) {
@@ -46,6 +48,17 @@ class Weather extends Component {
     this.setState({
       weatherData: weatherData,
       loading: false,
+      error: false,
+    });
+  }
+
+  weatherFailure(e) {
+    console.error(e);
+
+    this.setState({
+      weatherData: null,
+      loading: false,
+      error: true,
     });
   }
 
@@ -70,20 +83,23 @@ class Weather extends Component {
 
   render() {
     if (this.state.loading) {
-      return (
-        <div className="Weather">
-          <div className="loading-container"><Loading /></div>
-        </div>
-      );
+      const loadingContent = (<div className="loading-container"><Loading /></div>);
+      return this.weatherContainerWithContent(loadingContent);
     }
 
+    if (this.state.error) {
+      const errorContent = (<div className="error-container"><span>Weather data could not be loaded.</span></div>);
+      return this.weatherContainerWithContent(errorContent);
+    }
+
+    /* we now have data available */
     const currentCodeClass = this.buildWeatherIconClass(this.state.weatherData.condition.code);
     const forecastItems = this.state.weatherData.forecast.map((item, i) => {
       return this.buildForecastItem(item, i);
     });
 
-    return (
-      <div className="Weather">
+    const dataContent = (
+      <div>
         <div className="current">
           <div className="current-temp">
             <span className="value">{this.state.weatherData.condition.temp}°</span>
@@ -94,6 +110,16 @@ class Weather extends Component {
         <div className="forecast">
           {forecastItems}
         </div>
+      </div>
+    );
+
+    return this.weatherContainerWithContent(dataContent);
+  }
+
+  weatherContainerWithContent(content) {
+    return (
+      <div className="Weather">
+        {content}
       </div>
     );
   }

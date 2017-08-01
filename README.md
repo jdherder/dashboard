@@ -1,7 +1,7 @@
-#Dashboard
+# Dashboard
 A time and weather dashboard for use as a new tab or lock screen.
 
-###Up and Running:
+### Up and Running:
 
 To get started, run the following commands at project root:
 * 'npm install'
@@ -13,7 +13,7 @@ Building files to place on server:
 * 'npm run build'
     * This will create a 'build' folder at project root. Copy these files within this folder to the web server site root after successful build to deploy for production.
     
-###Configuration:
+### Configuration:
 
 If you would like to set your location for weather data, simply use a query param. Examples:
 

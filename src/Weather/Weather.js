@@ -28,8 +28,11 @@ class Weather extends Component {
   }
 
   getWeatherData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const location = urlParams.getAll('location')[0];
     const yahooApiLink = 'https://query.yahooapis.com/v1/public/yql?q=';
-    const query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\'kansas city, mo\')&format=json';
+    const locationText = location ? location : 'kansas city, mo';
+    const query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\'${locationText}\')&format=json`;
 
     Axios.get(yahooApiLink + query)
       .then(data => this.extractWeatherData(data))

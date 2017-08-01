@@ -17,7 +17,7 @@ Building files to place on server:
 
 If you would like to set your location for weather data, simply use a query param. Examples:
 
-http://localhost:3000?location=66086
-http://localhost:3000/?location=Pittsburg,%20KS
+* http://localhost:3000?location=66086
+* http://localhost:3000/?location=Pittsburg,%20KS
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
